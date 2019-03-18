@@ -1,0 +1,139 @@
+<% include ../partials/header %>
+<% include ../partials/menu %>
+	<div class="container">
+		<br>
+		<div class="row">
+			<div class="col-4">
+				<div class="card">
+				<!-- TODO: Modify the ejs code below, to conditionally set the image_src to be from our chosen player -->
+				  <% 
+				  var image_src = '../resources/img/helmet.jpg';
+					if (playerInfo)
+					{
+						playerInfo.forEach(function(item){ 
+							image_src = item.img_src;
+						});
+					}
+				  %>
+				 <img class="card-img-top" id="player_img" src= "<%- image_src %>" alt="Image of Football Player">
+				  <div class="card-body mx-auto">
+					<form class="form"action="/player_info/post" method="get">
+						<select class="custom-select" name="player_choice" onchange="this.form.submit()">
+							 <option selected>Select Player</option>
+										<% 
+										var name = '';
+										names.forEach(function(item){ 
+										name += '<option value=' + item.id + '>';
+										name += item.name;
+										name += '</option>';
+										});
+										%>
+									<%- name %> 
+						</select>
+					</form>
+				  </div>
+				</div>
+			</div>
+			<div class="col-8">
+				<div class="table-responsive">
+					<table class="table">
+						<tr>
+							<th>Year</th>
+							<td> 
+							<% 
+							var year = '';
+							if (playerInfo)
+							{
+										playerInfo.forEach(function(item){ 
+										year += item.year;
+										});
+							}
+							%>
+							<%- year %>  
+						</td>
+						</tr>
+						<tr>
+							<th>Major</th>
+							<td>
+								<% 
+								var major = '';
+								if (playerInfo)
+								{
+											playerInfo.forEach(function(item){ 
+											major += item.major;
+											});
+								}
+								%>
+								<%- major %>  
+							</td>
+						</tr>
+						<tr>
+							<th>Games Played</th>
+							<td>	
+								<% 
+								var GP = '';
+								if (gamesp)
+								{
+											gamesp.forEach(function(item){ 
+											GP += item.gp;
+											});
+								}
+								%>
+								<%- GP %>  
+							</td>
+						</tr>
+						<tr>
+							<td>Passing Yards: <% 
+															var py = '';
+															if (playerInfo)
+															{
+																		playerInfo.forEach(function(item){ 
+																		py += item.passing_yards;
+																		});
+															}
+															%>
+															<%- py %>  </td>
+							<td>Avg. Passing Yards: <% 
+															var apy = Math.round(py/GP * 100) / 100;
+															%>
+															<%- apy %></td>
+						</tr>
+						<tr>
+							<td>Rushing Yards: <% 
+															var ry = '';
+															if (playerInfo)
+															{
+																		playerInfo.forEach(function(item){ 
+																		ry += item.rushing_yards;
+																		});
+															}
+															%>
+															<%- ry %>  </td></td>
+							<td>Avg. Rushing Yards: <% 
+															var ary = Math.round(ry/GP * 100) / 100;
+															%>
+															<%- ary %></td>
+						</tr>
+						<tr>
+							<td>Receiving Yards: <% 
+															var rey = '';
+															if (playerInfo)
+															{
+																		playerInfo.forEach(function(item){ 
+																		rey += item.receiving_yards;
+																		});
+															}
+															%>
+															<%- rey %></td>
+							<td>Avg. Receiving Yards: <% 
+															var aruy = Math.round(rey/GP * 100) / 100;
+															%>
+															<%- aruy %></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+  
+<% include ../partials/footer %>
